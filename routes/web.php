@@ -20,4 +20,7 @@ Route::get('/', [KakeiboController::class, 'showHome'])->name('home');
 Route::get('/create',[KakeiboController::class, 'showCreate'])->name('create');
 
 //登録処理へ
-Route::post('/kakeibo/store',[KakeiboController::class, 'exeStore'])->name('store');
+Route::post('/store',[KakeiboController::class, 'exeStore'])->name('store');
+
+//計上結果画面へ
+Route::get('/result',[KakeiboController::class, 'showResult'])->name('result');
