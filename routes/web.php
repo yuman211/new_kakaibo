@@ -15,3 +15,9 @@ use App\Http\Controllers\KakeiboController;
 
 //ホーム画面を表示
 Route::get('/', [KakeiboController::class, 'showHome'])->name('home');
+
+//登録画面を表示
+Route::get('/create',[KakeiboController::class, 'showCreate'])->name('create');
+
+//登録処理へ
+Route::post('/kakeibo/store',[KakeiboController::class, 'exeStore'])->name('store');
