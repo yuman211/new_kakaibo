@@ -56,7 +56,6 @@ class KakeiboController extends Controller
      * @return view
      */
     function showResult(Request $request){
-
         $results = $request->session()->all();
         $request->session()->flush();
         dd($results);
