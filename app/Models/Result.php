@@ -16,7 +16,6 @@ class Result extends Model
         'sum_all',
         'sum_01',
         'sum_02',
-        'difference',
     ];
 
 
@@ -40,6 +39,6 @@ function insertGetResult($request){
         $sum_all = $sum_01 + $sum_02;
 
         $results= Result::create(['sum_all' => $sum_all, 'sum_01' => $sum_01, 'sum_02' => $sum_02]);
-        return $results->id;
+        return $results;
     }
 }

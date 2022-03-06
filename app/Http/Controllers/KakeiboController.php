@@ -33,34 +33,34 @@ class KakeiboController extends Controller
      */
     function exeStore(KakeiboRequest $request){
 
-        // \DB::beginTransaction();
-        // try {
-        //     //データを整形
-        //     $organizedInformation = $this->register->organizeInformation($request);
-        //     //登録
-        //     $organizedInformation->RegisterInformation();
-        // } catch (\Throwable $e) {
-        //     \DB::rollback();
-        //     abort(500);
-        // }
 
-        //resultsに挿入、IDを取得。
-        $result_id=$this->result->insertGetResult($request);
-
-        //データを整形(cost,members_id,results_id)を揃える
-        $organizedInformation=$this->register->organizeInformation($request,$result_id);
-        //登録
-        $this->register->RegisterInformation($organizedInformation);
-        //結果画面へ遷移
-        return redirect()->route('result')->withInput($organizedInformation);
+        \DB::beginTransaction();
+        try {
+            //resultsに挿入、IDを取得。
+            $results = $this->result->insertGetResult($request);
+            $result_id = $results->id;
+            //データを整形(cost,members_id,results_id)を揃える
+            $organizedInformation = $this->register->organizeInformation($request, $result_id);
+            //登録
+            $this->register->RegisterInformation($organizedInformation);
+            \DB::commit();
+            //結果画面へ遷移
+            return redirect()->route('result')->with($results->all()->toArray());
+        } catch (\Throwable $e) {
+            \DB::rollback();
+            abort(500);
+        }
     }
 
     /**
      * @return view
      */
     function showResult(Request $request){
-        $organizedInformation = $request->old();
-        dd($organizedInformation);
+
+        $results = $request->session()->all();
+        $request->session()->flush();
+        dd($results);
+        return view('kakeibo.result',compact('results'));
     }
 
     }
