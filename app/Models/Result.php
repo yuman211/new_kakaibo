@@ -38,7 +38,7 @@ function insertGetResult($request){
         //総合計
         $sum_all = $sum_01 + $sum_02;
 
-        $results= Result::create(['sum_all' => $sum_all, 'sum_01' => $sum_01, 'sum_02' => $sum_02]);
-        return $results;
+        $calculate_results= Result::create(['sum_all' => $sum_all, 'sum_01' => $sum_01, 'sum_02' => $sum_02]);
+        return $calculate_results;
     }
 }
