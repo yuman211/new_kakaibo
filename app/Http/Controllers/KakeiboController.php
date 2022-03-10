@@ -37,15 +37,18 @@ class KakeiboController extends Controller
         \DB::beginTransaction();
         try {
             //resultsに挿入、IDを取得。
-            $results = $this->result->insertGetResult($request);
-            $result_id = $results->id;
+            $calculate_results = $this->result->insertGetResult($request);
+
+
+            $result_id = $calculate_results->id;
             //データを整形(cost,members_id,results_id)を揃える
             $organizedInformation = $this->register->organizeInformation($request, $result_id);
             //登録
             $this->register->RegisterInformation($organizedInformation);
             \DB::commit();
             //結果画面へ遷移
-            return redirect()->route('result')->with($results->all()->toArray());
+
+            return redirect()->route('result')->with($calculate_results->toArray());
         } catch (\Throwable $e) {
             \DB::rollback();
             abort(500);
@@ -56,10 +59,13 @@ class KakeiboController extends Controller
      * @return view
      */
     function showResult(Request $request){
-        $results = $request->session()->all();
+        $calculate_results = $request->session()->all();
         $request->session()->flush();
-        dd($results);
-        return view('kakeibo.result',compact('results'));
+
+        $sum_each = $calculate_results['sum_all']/2;
+        $difference = abs($sum_each-$calculate_results['sum_01']);
+        
+        return view('kakeibo.result',compact('calculate_results','sum_each','difference'));
     }
 
     }
