@@ -28,7 +28,7 @@ class StoreKakeiboController extends Controller
     {
         $result = DB::transaction(function () use ($request) {
             $result = $this->storeResultService->execute($request->costs_01, $request->costs_02);
-            $this->storeRegisterService->execute($request->costs_01, $request->cost_02, $result);
+            $this->storeRegisterService->execute($request->costs_01, $request->costs_02, $result);
             return $result;
         });
         return redirect()->route('result')->with($result->toArray());
