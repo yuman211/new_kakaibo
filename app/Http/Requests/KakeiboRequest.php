@@ -11,7 +11,7 @@ class KakeiboRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,12 +21,12 @@ class KakeiboRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
             'costs_01.*' => 'nullable|integer',
             'costs_02.*' => 'nullable|integer',
         ];
     }
+
 }
